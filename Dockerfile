@@ -25,10 +25,9 @@ RUN set -o pipefail \
  && rm -rf /var/www/* \
  && unzip http_legacy_fallback.zip -d /var/www \
  && rm http_legacy_fallback.zip \
- && curl -SL https://install.speedtest.net/ooklaserver/stable/OoklaServer-linux64.tgz | tar -xzoC /opt/ookla/ \
- && mv /opt/ookla/OoklaServer.properties.default /opt/ookla/OoklaServer.properties
-
-    
+ && curl -SL https://install.speedtest.net/ooklaserver/stable/OoklaServer-linux64.tgz | tar -xzoC /opt/ookla/
+ 
+COPY OoklaServer.properties /opt/ookla/OoklaServer.properties
 
 # Copy config files
 COPY etc /etc/
