@@ -36,5 +36,5 @@ COPY ./docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
-EXPOSE 80 5060 8080
+EXPOSE 80 5060 8080 5060/udp 8080/udp
 CMD ["/usr/bin/supervisord"]
