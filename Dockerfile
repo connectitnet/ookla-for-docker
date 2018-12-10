@@ -3,11 +3,12 @@
 # Based on Alpine
 ############################################################
 
-# Set the base image to Alpine
-FROM alpine
+# Set the base image to Alpine with glibc
+FROM frolvlad/alpine-glibc
 
 LABEL maintainer="jsenecal@connectitnet.com"
 
+ENV LANG=C.UTF-8
 ENV ALLOWED_DOMAINS *.ookla.com, *.speedtest.net
 
 ## Installation
@@ -24,7 +25,7 @@ RUN set -o pipefail \
  && rm -rf /var/www/* \
  && unzip http_legacy_fallback.zip -d /var/www \
  && rm http_legacy_fallback.zip \
- && curl -SL https://install.speedtest.net/ooklaserver/stable/OoklaServer-linux64.tgz | tar -xzovC /opt/ookla/ \
+ && curl -SL https://install.speedtest.net/ooklaserver/stable/OoklaServer-linux64.tgz | tar -xzoC /opt/ookla/ \
  && mv /opt/ookla/OoklaServer.properties.default /opt/ookla/OoklaServer.properties
 
     
@@ -35,5 +36,5 @@ COPY ./docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
-EXPOSE 80 8080
+EXPOSE 80 5060 8080
 CMD ["/usr/bin/supervisord"]
